@@ -1,0 +1,34 @@
+{% extends 'app1/base.html' %}
+{% load static %}
+{% block title %} Search Results {% endblock title %}
+
+{% block main-content %}
+<div class="container my-5">
+    <h2>Search Results for "{{ query }}"</h2>
+    
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="row">
+                {% if product %}
+                    {% for prod in product %}
+                        <div class="col-sm-4 text-center mb-4 hover-shadow">
+                            <a href="{% url 'product-detail' prod.id %}" class="btn">
+                                <div>
+                                    <img src="{{ prod.product_image.url }}" width="300px" height="200px" />
+                                    <div class="fw-bold">{{ prod.title }}</div>
+                                    <div class="fw-bold text-danger">
+                                        EG.{{ prod.discounted_price }}/-
+                                        <small class="fw-light text-decoration-line-through">{{ prod.selling_price }}</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted">No results found for "{{ query }}". Please try a different search.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}
